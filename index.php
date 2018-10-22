@@ -47,26 +47,42 @@
         else{
             $finalNetmask= 0;
         }
+        if(isset($_POST["tipo"]))
+        {
+            if(isset($_POST['calculate_button']))
+            {
+                $tipo= $_POST["tipo"];
+            }else
+                $tipo="";
+        }
+        else{
+            $tipo= 0;
+        }
     ?> 
 
     <!--Formulario-->
 	<article class="container">
 		<form action="index.php" method="POST">
 			<div  class="form-group row">
-				<div class="form-group form-group-sm col-sm-4">
+				<div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Dirección IP:</label>
 					<input type="text" id="ipAdress" name="ipAdress" value="<?php echo $ipAdress; ?>" class="form-control" required pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$">
 				</div>
-				<div class="form-group form-group-sm col-sm-4">
+                <div class="form-group form-group-sm col-sm-3">
+					<label class="col-form-label">Tipo de RED :</label>
+					<input type="text" required id="tipo" name="tipo" value="<?php echo $tipo; ?>" disabled="disabled" class="form-control">
+				</div>
+				<div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Netmask Inicial (ejem: 24):</label>
 					<input type="text" required id="firstNetmask" name="firstNetmask" value="<?php echo $firstNetmask; ?>" class="form-control">
 				</div>
-				<div class="form-group form-group-sm col-sm-4">
+				<div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Netmask Final (ejem: 30):</label>		
 					<input type="number" required id="finalNetmask" name="finalNetmask"
                            value="<?php echo $finalNetmask; ?>" class="form-control" step="1" max="30">
 				</div>
 			</div>
+            <br/>
 			<div class="text-center">
 				<button type="submit" name="calculate_button" class="btn btn-primary">Calcular</button>
 				<button type="submit" name="clean_button" class="btn btn-success">Limpiar</button>
@@ -80,14 +96,25 @@
         var ipAdressInput = document.getElementById("ipAdress");
         var firstNetmask = document.getElementById("firstNetmask");
         var finalNetmask = document.getElementById("finalNetmask");
+        var tipo = document.getElementById("tipo");
         function getIpNetmask() {
             var ipAdress = ipAdressInput.value.split('.');
             if (ipAdress[0] > 0 && ipAdress[0] < 127)
+            {
                 firstNetmask.value = 8;
+                tipo.value="Clase A";
+            }
             else if (ipAdress[0] >= 128 && ipAdress[0] < 191)
-                firstNetmask.value = 16;
-            else if (ipAdress[0] >= 192 && ipAdress[0] < 223)
+            {
+                 firstNetmask.value = 16;
+                tipo.value="Clase B";
+            }
+               
+            else if (ipAdress[0] >= 192 && ipAdress[0] < 223){
                 firstNetmask.value = 24;
+                tipo.value="Clase C";
+            }
+                
             else
                 firstNetmask.value = "No soportado";
             finalNetmask.min=firstNetmask.value;//el mínimo de la netmask de destino es la netmask por default
@@ -103,7 +130,18 @@
       {
          if($firstNetmask!="No soportado")
           {
+            $valor = $_POST["tipo"];
+            echo $valor; 
+
             echo "vamos a calcular";
+            $pieces = explode('.', $ipAdress);
+            // foreach($pieces as $part) {
+            //     echo($pieces);
+            // }
+            echo $pieces[0];
+            echo $pieces[1];
+            echo $pieces[2];
+            echo $pieces[3];
           }else
             echo "no se puede calcular";
       }
