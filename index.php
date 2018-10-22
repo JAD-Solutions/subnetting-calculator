@@ -12,8 +12,8 @@
 		</article>
 	</header>
 
-    <?php
-
+    <!--Validación variables cargadas-->
+    <?php 
         if(isset($_POST["ipAdress"]))
         {
             if(isset($_POST['calculate_button']))
@@ -47,9 +47,9 @@
         else{
             $finalNetmask= 0;
         }
+    ?> 
 
-
-    ?> <!--Validación variables cargadas-->
+    <!--Formulario-->
 	<article class="container">
 		<form action="index.php" method="POST">
 			<div  class="form-group row">
@@ -59,7 +59,7 @@
 				</div>
 				<div class="form-group form-group-sm col-sm-4">
 					<label class="col-form-label">Netmask Inicial (ejem: 24):</label>
-					<input type="text" required id="firstNetmask" name="firstNetmask" value="<?php echo $firstNetmask; ?>" disabled="disabled" class="form-control">
+					<input type="text" required id="firstNetmask" name="firstNetmask" value="<?php echo $firstNetmask; ?>" class="form-control">
 				</div>
 				<div class="form-group form-group-sm col-sm-4">
 					<label class="col-form-label">Netmask Final (ejem: 30):</label>		
@@ -75,6 +75,7 @@
 		</form>
 	</article>
 
+    <!--Validacion de Formulario-->
     <script type="application/javascript">
         var ipAdressInput = document.getElementById("ipAdress");
         var firstNetmask = document.getElementById("firstNetmask");
@@ -96,6 +97,18 @@
         triggerIp.addEventListener("change", getIpNetmask, false);
     </script>
 
+    <!--Calculo de Resultados-->
+    <?php 
+       if(isset($_POST['calculate_button']))
+      {
+         if($ipAdress!=""&&$firstNetmask=""&&$finalNetmask="")
+          {
+            echo "vamos a calcular";
+          }else
+            echo "todos los campos deben tener un valor";
+      }
+    ?>
+    
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
