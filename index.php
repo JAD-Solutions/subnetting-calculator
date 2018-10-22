@@ -99,13 +99,13 @@
 
     <!--Calculo de Resultados-->
     <?php 
-       if(isset($_POST['calculate_button']))
+       if(isset($_POST['calculate_button'])&&isset($_POST['firstNetmask'])&&isset($_POST['finalNetmask']))
       {
-         if($ipAdress!=""&&$firstNetmask=""&&$finalNetmask="")
+         if($firstNetmask!="No soportado")
           {
             echo "vamos a calcular";
           }else
-            echo "todos los campos deben tener un valor";
+            echo "no se puede calcular";
       }
     ?>
     
