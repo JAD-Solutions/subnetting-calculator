@@ -110,6 +110,25 @@
         var firstNetmask = document.getElementById("firstNetmask");
         var finalNetmask = document.getElementById("finalNetmask");
         var tipo = document.getElementById("tipo");
+        function getClase() {
+            var ipAdress = ipAdressInput.value.split('.');
+            if (ipAdress[0] > 0 && ipAdress[0] < 127)
+            {
+                tipo.value="Clase A";
+                tipo2.value="Clase A";
+            }
+            else if (ipAdress[0] >= 128 && ipAdress[0] < 191)
+            {
+                tipo.value="Clase B";
+                tipo2.value="Clase B";
+            }
+               
+            else if (ipAdress[0] >= 192 && ipAdress[0] < 223){
+                tipo.value="Clase C";
+                tipo2.value="Clase C";
+            }
+                
+        }
         function getIpNetmask() {
             var ipAdress = ipAdressInput.value.split('.');
             if (ipAdress[0] > 0 && ipAdress[0] < 127)
@@ -135,19 +154,19 @@
                 firstNetmask.value = "No soportado";
             finalNetmask.min=firstNetmask.value;//el mínimo de la netmask de destino es la netmask por default
         }
-
         var triggerIp = document.getElementById("ipAdress");
         triggerIp.addEventListener("change", getIpNetmask, false);
-        document.addEventListener("click", getIpNetmask, false);
+        document.addEventListener("click", getClase, false);
 
     </script>
 
     <!--Calculo de Resultados-->
     <?php 
-       if(isset($_POST['calculate_button'])&&isset($_POST['firstNetmask'])&&isset($_POST['finalNetmask']))
+       if(isset($_POST['calculate_button']))
       {
-         if($firstNetmask!="No soportado")
+         if($firstNetmask!="No soportado"&&($finalNetmask>=$firstNetmask))
           {
+              
             $firstBitsHost=32-$firstNetmask;
             $firstIpNumber= pow(2,$firstBitsHost);
 
@@ -169,8 +188,8 @@
             }
             if($tipo2=="Clase C"){
                 ?>
-                <table class="table">
-                <thead>
+                <table class="table table-sm">
+                <thead  class="thead-dark">
                     <tr>
                     <th scope="col">#</th>
                     <th scope="col">Subnetting</th>
