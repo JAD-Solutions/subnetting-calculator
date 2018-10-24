@@ -104,6 +104,73 @@
 		</form>
 	</article>
 
+
+
+    <!--Calculo de Resultados-->
+    <article class="jumbotron" style="background-color: #ffffff">
+        <?php
+           if(isset($_POST['calculate_button']))
+          {
+             if($firstNetmask!="No soportado"&&($finalNetmask>=$firstNetmask))
+              {
+
+                $firstBitsHost=32-$firstNetmask;
+                $firstIpNumber= pow(2,$firstBitsHost);
+
+                $finalBitsHost=32-$finalNetmask;
+                $finalIpNumber= pow(2,$finalBitsHost);
+
+                $subnettingNumber=$firstIpNumber/$finalIpNumber;
+                $subnettingSize=$firstIpNumber/$subnettingNumber;
+
+                  ?>
+                  <table class="table table-stripped">
+                      <thead  class="thead-dark">
+                      <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Subnetting</th>
+                          <th scope="col">IPS Disponibles</th>
+                          <th scope="col">Broadcast</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+
+
+                  <?php
+
+                if($tipo2=="Clase A"){
+                    echo "calculo A";
+                }
+                if($tipo2=="Clase B"){
+                    echo "calculo B";
+                }
+                if($tipo2=="Clase C"){
+
+                    $ip=0;
+                    $aux=$ip+1;
+                    $aux2=$ip+$subnettingSize-2;
+                    $aux3=$ip+$subnettingSize-1;
+                    echo "<tr><th scope='col'>1</th><td>$ip</td><td>$aux - $aux2</td><td>$aux3</td></tr>";
+                    for($i=2;$i<=$subnettingNumber;$i++){
+                        $ip+=$subnettingSize;
+                        $aux=$ip+1;
+                        $aux2=$ip+$subnettingSize-2;
+                        $aux3=$ip+$subnettingSize-1;
+                        echo "<tr><th scope='col'>$i</th><td>$ip</td><td>$aux - $aux2</td><td>$aux3</td></tr>";
+                    }
+                    ?>
+                    </tbody>
+                    </table>
+
+        <?php
+                }
+              }else
+                echo "no se puede calcular";
+          }
+        ?>
+    </article>
+
+
     <!--Validacion de Formulario-->
     <script type="application/javascript">
         var ipAdressInput = document.getElementById("ipAdress");
@@ -122,12 +189,12 @@
                 tipo.value="Clase B";
                 tipo2.value="Clase B";
             }
-               
+
             else if (ipAdress[0] >= 192 && ipAdress[0] < 223){
                 tipo.value="Clase C";
                 tipo2.value="Clase C";
             }
-                
+
         }
         function getIpNetmask() {
             var ipAdress = ipAdressInput.value.split('.');
@@ -139,17 +206,17 @@
             }
             else if (ipAdress[0] >= 128 && ipAdress[0] < 191)
             {
-                 firstNetmask.value = 16;
+                firstNetmask.value = 16;
                 tipo.value="Clase B";
                 tipo2.value="Clase B";
             }
-               
+
             else if (ipAdress[0] >= 192 && ipAdress[0] < 223){
                 firstNetmask.value = 24;
                 tipo.value="Clase C";
                 tipo2.value="Clase C";
             }
-                
+
             else
                 firstNetmask.value = "No soportado";
             finalNetmask.min=firstNetmask.value;//el mínimo de la netmask de destino es la netmask por default
@@ -159,71 +226,6 @@
         document.addEventListener("click", getClase, false);
 
     </script>
-
-    <!--Calculo de Resultados-->
-    <?php 
-       if(isset($_POST['calculate_button']))
-      {
-         if($firstNetmask!="No soportado"&&($finalNetmask>=$firstNetmask))
-          {
-              
-            $firstBitsHost=32-$firstNetmask;
-            $firstIpNumber= pow(2,$firstBitsHost);
-
-            $finalBitsHost=32-$finalNetmask;
-            $finalIpNumber= pow(2,$finalBitsHost);
-
-            $subnettingNumber=$firstIpNumber/$finalIpNumber;
-            $subnettingSize=$firstIpNumber/$subnettingNumber;
-
-            
-
-
-
-            if($tipo2=="Clase A"){
-                echo "calculo A";
-            }
-            if($tipo2=="Clase B"){
-                echo "calculo B";
-            }
-            if($tipo2=="Clase C"){
-                ?>
-                <table class="table table-sm">
-                <thead  class="thead-dark">
-                    <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Subnetting</th>
-                    <th scope="col">IPS Disponibles</th>
-                    <th scope="col">Broadcast</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    
-    <?php
-                $ip=0;
-                $aux=$ip+1;
-                $aux2=$ip+$subnettingSize-2;
-                $aux3=$ip+$subnettingSize-1;
-                echo "<tr><th scope='col'>1</th><td>$ip</td><td>$aux - $aux2</td><td>$aux3</td></tr>";
-                for($i=2;$i<=$subnettingNumber;$i++){
-                    $ip+=$subnettingSize;
-                    $aux=$ip+1;
-                    $aux2=$ip+$subnettingSize-2;
-                    $aux3=$ip+$subnettingSize-1;
-                    echo "<tr><th scope='col'>$i</th><td>$ip</td><td>$aux - $aux2</td><td>$aux3</td></tr>";
-                }
-                ?> 
-                </tbody>
-                </table>
-
-    <?php
-            }
-          }else
-            echo "no se puede calcular";
-      }
-    ?>
-    
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
