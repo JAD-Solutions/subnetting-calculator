@@ -56,8 +56,20 @@
                 $tipo="";
         }
         else{
-            $tipo= 0;
+            $tipo="";
         }
+        if(isset($_POST["tipo2"]))
+        {
+            if(isset($_POST['calculate_button']))
+            {
+                $tipo2= $_POST["tipo2"];
+            }else
+                $tipo2="";
+        }
+        else{
+            $tipo2="";
+        }
+
     ?> 
 
     <!--Formulario-->
@@ -66,15 +78,16 @@
 			<div  class="form-group row">
 				<div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Dirección IP:</label>
-					<input type="text" id="ipAdress" name="ipAdress" value="<?php echo $ipAdress; ?>" class="form-control" required pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$">
+					<input type="text" class="form-control" required id="ipAdress" name="ipAdress" value="<?php echo $ipAdress; ?>" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$">
 				</div>
                 <div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Tipo de RED :</label>
-					<input type="text" required id="tipo" name="tipo" value="<?php echo $tipo; ?>" disabled="disabled" class="form-control">
+                    <input type="text" class="form-control" required id="tipo" name="tipo" value="<?php echo $tipo; ?>" disabled>
+					<input type="hidden" required id="tipo2" name="tipo2" value="<?php echo $tipo2; ?>  " >
 				</div>
 				<div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Netmask Inicial (ejem: 24):</label>
-					<input type="text" required id="firstNetmask" name="firstNetmask" value="<?php echo $firstNetmask; ?>" class="form-control">
+					<input type="number" class="form-control" required id="firstNetmask" name="firstNetmask" value="<?php echo $firstNetmask; ?>">
 				</div>
 				<div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Netmask Final (ejem: 30):</label>		
@@ -84,7 +97,7 @@
 			</div>
             <br/>
 			<div class="text-center">
-				<button type="submit" name="calculate_button" class="btn btn-primary">Calcular</button>
+				<button type="submit" name="calculate_button"  id="calculate_button" class="btn btn-primary">Calcular</button>
 				<button type="submit" name="clean_button" class="btn btn-success">Limpiar</button>
 			</div>
 			
@@ -103,16 +116,19 @@
             {
                 firstNetmask.value = 8;
                 tipo.value="Clase A";
+                tipo2.value="Clase A";
             }
             else if (ipAdress[0] >= 128 && ipAdress[0] < 191)
             {
                  firstNetmask.value = 16;
                 tipo.value="Clase B";
+                tipo2.value="Clase B";
             }
                
             else if (ipAdress[0] >= 192 && ipAdress[0] < 223){
                 firstNetmask.value = 24;
                 tipo.value="Clase C";
+                tipo2.value="Clase C";
             }
                 
             else
@@ -122,6 +138,8 @@
 
         var triggerIp = document.getElementById("ipAdress");
         triggerIp.addEventListener("change", getIpNetmask, false);
+        document.addEventListener("click", getIpNetmask, false);
+
     </script>
 
     <!--Calculo de Resultados-->
@@ -130,18 +148,58 @@
       {
          if($firstNetmask!="No soportado")
           {
-            $valor = $_POST["tipo"];
-            echo $valor; 
+            $firstBitsHost=32-$firstNetmask;
+            $firstIpNumber= pow(2,$firstBitsHost);
 
-            echo "vamos a calcular";
-            $pieces = explode('.', $ipAdress);
-            // foreach($pieces as $part) {
-            //     echo($pieces);
-            // }
-            echo $pieces[0];
-            echo $pieces[1];
-            echo $pieces[2];
-            echo $pieces[3];
+            $finalBitsHost=32-$finalNetmask;
+            $finalIpNumber= pow(2,$finalBitsHost);
+
+            $subnettingNumber=$firstIpNumber/$finalIpNumber;
+            $subnettingSize=$firstIpNumber/$subnettingNumber;
+
+            
+
+
+
+            if($tipo2=="Clase A"){
+                echo "calculo A";
+            }
+            if($tipo2=="Clase B"){
+                echo "calculo B";
+            }
+            if($tipo2=="Clase C"){
+                ?>
+                <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Subnetting</th>
+                    <th scope="col">IPS Disponibles</th>
+                    <th scope="col">Broadcast</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    
+    <?php
+                $ip=0;
+                $aux=$ip+1;
+                $aux2=$ip+$subnettingSize-2;
+                $aux3=$ip+$subnettingSize-1;
+                echo "<tr><th scope='col'>1</th><td>$ip</td><td>$aux - $aux2</td><td>$aux3</td></tr>";
+                for($i=2;$i<=$subnettingNumber;$i++){
+                    $ip+=$subnettingSize;
+                    $aux=$ip+1;
+                    $aux2=$ip+$subnettingSize-2;
+                    $aux3=$ip+$subnettingSize-1;
+                    echo "<tr><th scope='col'>$i</th><td>$ip</td><td>$aux - $aux2</td><td>$aux3</td></tr>";
+                }
+                ?> 
+                </tbody>
+                </table>
+
+    <?php
+            }
           }else
             echo "no se puede calcular";
       }
