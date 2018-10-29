@@ -17,8 +17,8 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="181" lean-forward="true" selection-start-line="181" selection-end-line="181" />
+            <state relative-caret-position="669">
+              <caret line="184" column="9" lean-forward="true" selection-start-line="184" selection-start-column="9" selection-end-line="184" selection-end-column="9" />
               <folding>
                 <element signature="e#6413#7356#0#HTML" />
               </folding>
@@ -131,7 +131,7 @@
       <workItem from="1540177544104" duration="2495000" />
       <workItem from="1540517010521" duration="443000" />
       <workItem from="1540677088022" duration="7339000" />
-      <workItem from="1540700125235" duration="6937000" />
+      <workItem from="1540700125235" duration="11022000" />
     </task>
     <task id="LOCAL-00001" summary="trabajando con variables correcto">
       <created>1539751472564</created>
@@ -168,26 +168,41 @@
       <option name="project" value="LOCAL" />
       <updated>1540680993487</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="avance para revisar último commit de johnny">
+      <created>1540784658044</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1540784658044</updated>
+    </task>
+    <task id="LOCAL-00007" summary="trabajo con un solo campo tipo, dejando disabled y usando readonly">
+      <created>1540788786319</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1540788786319</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40768000" />
+    <option name="totallyTimeSpent" value="44853000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12884334" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32755905" />
       <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.50073206" side_tool="true" weight="0.32913387" />
-      <window_info anchor="right" id="Database" order="3" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49926794" weight="0.32755905" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12884334" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -197,7 +212,6 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3290735" />
-      <window_info anchor="bottom" id="Messages" order="7" weight="0.32755905" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -248,7 +262,9 @@
     <MESSAGE value="mejoras estéticas en table y uso de etiqueta article.jumbotron para mostrar resutlado" />
     <MESSAGE value="commit para switchear a avance de johnny" />
     <MESSAGE value="valida firstNetmask al hacer click fuera" />
-    <option name="LAST_COMMIT_MESSAGE" value="valida firstNetmask al hacer click fuera" />
+    <MESSAGE value="avance para revisar último commit de johnny" />
+    <MESSAGE value="trabajo con un solo campo tipo, dejando disabled y usando readonly" />
+    <option name="LAST_COMMIT_MESSAGE" value="trabajo con un solo campo tipo, dejando disabled y usando readonly" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -348,8 +364,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="181" lean-forward="true" selection-start-line="181" selection-end-line="181" />
+        <state relative-caret-position="669">
+          <caret line="184" column="9" lean-forward="true" selection-start-line="184" selection-start-column="9" selection-end-line="184" selection-end-column="9" />
           <folding>
             <element signature="e#6413#7356#0#HTML" />
           </folding>

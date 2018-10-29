@@ -165,8 +165,15 @@
                         $aux2=254;
                         $aux3=255;
                     }
-
-                    echo "<tr><th scope='col'>$i</th><td> . $ipA . $ipB . $ip</td><td> . $ipA . $ipB .$aux . $ipA . $ipB . $aux2</td><td>  . $ipA . $ipB .$aux3</td></tr>";
+                    if($tipo==="Clase A"){
+                        echo "<tr><th scope='col'>$i</th><td> $octetos[0] . $ipA . $ipB . $ip</td><td> $octetos[0] . $ipA . $ipB . <strong>[ $aux - $aux2 ]</strong></td><td> $octetos[0] . $ipA . $ipB .$aux3</td></tr>";
+                    }elseif ($tipo==="Clase B"){
+                        echo "<tr><th scope='col'>$i</th><td> $octetos[0] . $octetos[1] . $ipB . $ip</td><td> $octetos[0] . $octetos[1] . <strong>[ $ipB . $aux - ",$ipB+$subnettingSize-1," . $aux2 ]</strong></td><td> $octetos[0] . $octetos[1] . ",$ipB+$subnettingSize-1," . $aux3</td></tr>";
+                    }elseif ($tipo==="Clase C"){
+                        echo "C";
+                    }else{
+                        echo "Red inválida";
+                    }
                    $ip+=$subnettingSize;
                 }    //Comentando el código de Johnny
 
@@ -176,19 +183,11 @@
                 </table>
 
     <?php
-            
+
           }else
             echo "no se puede calcular";
       }
-        if($tipo==="Clase A"){
-            echo "A";
-        }elseif ($tipo==="Clase B"){
-            echo "B";
-        }elseif ($tipo==="Clase C"){
-            echo "C";
-        }else{
-            echo "Red inválida";
-        }
+
     ?>
 
     <!--Validacion de Formulario-->
