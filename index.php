@@ -19,22 +19,13 @@
             if(isset($_POST['calculate_button']))
             {
                 $ipAdress = $_POST["ipAdress"];
-                $ipAdressA = $_POST["ipAdressA"];
-                $ipAdressB = $_POST["ipAdressB"];
-                $ipAdressC = $_POST["ipAdressC"];
             }else{
                 $ipAdress = "";
-                $ipAdressA = "";
-                $ipAdressB = "";
-                $ipAdressC = "";
             }
                 
         }
         else{
             $ipAdress= 0;
-            $ipAdressA= 0;
-            $ipAdressB= 0;
-            $ipAdressC= 0;
 
         }
         if(isset($_POST["firstNetmask"]))
@@ -91,11 +82,7 @@
 				<div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Dirección IP:</label>
 					<input type="text" class="form-control" required id="ipAdress" name="ipAdress" value="<?php echo $ipAdress; ?>" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$">
-                    <input type="hidden" class="form-control" required id="ipAdressA" name="ipAdressA" value="<?php echo $ipAdressA; ?>" >
-                    <input type="hidden" class="form-control" required id="ipAdressB" name="ipAdressB" value="<?php echo $ipAdressB; ?>" >
-                    <input type="hidden" class="form-control" required id="ipAdressC" name="ipAdressC" value="<?php echo $ipAdressC; ?>" >
-				
-				</div>
+  				</div>
                 <div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Tipo de RED :</label>
                     <input type="text" class="form-control" required id="tipo" name="tipo" value="<?php echo $tipo; ?>" disabled>
@@ -123,17 +110,11 @@
     <!--Validacion de Formulario-->
     <script type="application/javascript">
         var ipAdressInput = document.getElementById("ipAdress");
-        var ipAdressA = document.getElementById("ipAdressA");
-        var ipAdressB = document.getElementById("ipAdressB");
-        var ipAdressC = document.getElementById("ipAdressC");
         var firstNetmask = document.getElementById("firstNetmask");
         var finalNetmask = document.getElementById("finalNetmask");
         var tipo = document.getElementById("tipo");
         function getClase() {
             var ipAdress = ipAdressInput.value.split('.');
-            var ipAdressA.value = ipAdress[0];
-            var ipAdressB.value = ipAdress[1];
-            var ipAdressC.value = ipAdress[2];
             if (ipAdress[0] > 0 && ipAdress[0] < 127)
             {
                 tipo.value="Clase A";
@@ -259,7 +240,7 @@
                         $aux3=255;
                     }
                    
-                    echo "<tr><th scope='col'>$i</th><td>$ipAdressA . $ipA . $ipB . $ip</td><td>$ipAdressA . $ipA . $ipB .$aux  - $ipAdressA . $ipA . $ipB . $aux2</td><td> $ipAdressA . $ipA . $ipB .$aux3</td></tr>";
+                    echo "<tr><th scope='col'>$i</th><td> . $ipA . $ipB . $ip</td><td> . $ipA . $ipB .$aux  -  . $ipA . $ipB . $aux2</td><td>  . $ipA . $ipB .$aux3</td></tr>";
                    $ip+=$subnettingSize;
                 }   
                 ?>  
