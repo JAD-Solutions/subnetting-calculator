@@ -10,8 +10,12 @@
 
 <body>
 	<header >
-		<article class="jumbotron" style="background-color:#0747a6">
-			<a href="index.php"><h1 class="text-center" style="color: white"> Calculadora de Subredes </h1></a>
+		<article class="jumbotron" style="background-color:#0747a6; margin-left: auto; margin-right: auto;">
+                <h1>
+                    <a href="" class="typewrite" data-period="2000" data-type='[ "Calculadora de subredes.", "Segmente su red de internet.", "La nueva solución en materia de redes.", "Aprende a segmentar." ]'>
+                        <span class="wrap"></span>
+                    </a>
+                </h1>
 		</article>
 	</header>
 
