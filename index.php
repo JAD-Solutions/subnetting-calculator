@@ -191,7 +191,9 @@
                 <tr>
                 <th scope="col">#</th>
                 <th scope="col">Subnetting</th>
-                <th scope="col">IPS Disponibles</th>
+                <th scope="col">IPS Inicio</th>
+                <th scope="col"> - </th>
+                <th scope="col">IPS Fin</th>
                 <th scope="col">Broadcast</th>
                 </tr>
             </thead>
@@ -218,30 +220,73 @@
               
             
                  $ip=0;
+                
+            //Inicializo las variables
+            $subnettingAux1=0;
+            $subnettingAux2=0;
+            $subnettingAux3=0;
+            $subnettingAux4=0;
+
+            $firstIpAux1=0;
+            $firstIpAux2=0;
+            $firstIpAux3=0;
+            $firstIpAux4=0;
+                 
+            $finishIpAux1=0;
+            $finishIpAux2=0;
+            $finishIpAux3=0;
+            $finishIpAux4=0;
+
+            $broadcastAux1=0;
+            $broadcastAux2=0;
+            $broadcastAux3=0;
+            $broadcastAux4=0;
+
                 for($i=1;$i<=$subnettingNumber;$i++){
-                    $aux=$ip+1;
-                    $aux2=$ip+$subnettingSize-2;
-                    $aux3=$ip+$subnettingSize-1;
-                    if($ip>255){
-                        $val=$ip/256;
-                        $ipB+=round($val, 0, PHP_ROUND_HALF_DOWN);
-                        $ip=0;
-                        $aux=0;
-                        $aux2=254;
-                        $aux3=255;
+
+                    // $finishIpAux1=$subnettingAux1;
+                    // $finishIpAux2=$subnettingAux2;
+                    // $finishIpAux3=$subnettingAux3;
+                    // $finishIpAux4=$subnettingAux4+$subnettingSize-2;
+
+                    // $broadcastAux1=$subnettingAux1;
+                    // $broadcastAux2=$subnettingAux2;
+                    // $broadcastAux3=$subnettingAux3;
+                    // $broadcastAux4=$subnettingAux4+$subnettingSize-1;
+
+                    if($subnettingAux4>255){
+                        $val=$subnettingAux4/256;
+                        $subnettingAux3+=round($val, 0, PHP_ROUND_HALF_DOWN);
+                        $subnettingAux4=0;
+                       // $finishIpAux1=$subnettingAux1;
+                        // $finishIpAux2=$subnettingAux2;
+                        // $finishIpAux3=$subnettingAux3-1;
+                        // $finishIpAux4=254;
+
+                        // $broadcastAux1=$subnettingAux1;
+                        // $broadcastAux2=$subnettingAux2;
+                        // $broadcastAux3=$subnettingAux3-1;
+                        // $broadcastAux4=255;
                     }
-                    if($ipB>255){
-                        $val=$ipB/256;
+                    if($subnettingAux3>255){
+                        $val=$subnettingAux3/256;
                         $ipA+=round($val, 0, PHP_ROUND_HALF_DOWN);
-                        $ipB=0;
-                        $ip=0;
-                        $aux=0;
-                        $aux2=254;
-                        $aux3=255;
+                        $subnettingAux3=0;
+                        $subnettingAux4=0;
+                        
+                        // $finishIpAux4=254;
+                        // $broadcastAux4=255;
                     }
+
+                    $firstIpAux1=$subnettingAux1;
+                    $firstIpAux2=$subnettingAux2;
+                    $firstIpAux3=$subnettingAux3;
+                    $firstIpAux4=$subnettingAux4+1;
+
                    
-                    echo "<tr><th scope='col'>$i</th><td> . $ipA . $ipB . $ip</td><td> . $ipA . $ipB .$aux  -  . $ipA . $ipB . $aux2</td><td>  . $ipA . $ipB .$aux3</td></tr>";
-                   $ip+=$subnettingSize;
+                    echo "<tr><th scope='col'>$i</th><td> $subnettingAux1 . $subnettingAux2 . $subnettingAux3 . $subnettingAux4</td><td> $firstIpAux1 . $firstIpAux2 . $firstIpAux3 .$firstIpAux4  </td><td> - </td><td> $finishIpAux1 . $finishIpAux2 . $finishIpAux3 . $finishIpAux4</td><td> $broadcastAux1 . $broadcastAux2 . $broadcastAux3 .$broadcastAux4</td></tr>";
+                   $subnettingAux4+=$subnettingSize;
+                   
                 }   
                 ?>  
                 </tbody>
