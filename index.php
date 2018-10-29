@@ -105,6 +105,7 @@
 			</div>
 			
 		</form>
+        <br>
 	</article>
 
     <!--Validacion de Formulario-->
@@ -199,33 +200,16 @@
             </thead>
             <tbody>
     <?php
-            $ipA=0;
-            $ipB=0;
-            $ipC=0;
-            echo $ipA;
-            echo $ipB ;
-            echo $ipC;
-            if($tipo2=="Clase A")
-            {
-                echo "a";
-            };
-            if($tipo2=="Clase B")
-            {
-                echo "b";
-            };
-            if($tipo2=="Clase C")
-            {
-                echo "c";
-            };
-              
-            
-                 $ip=0;
-                
-            //Inicializo las variables
+        //Inicializo las variables
             $subnettingAux1=0;
             $subnettingAux2=0;
             $subnettingAux3=0;
             $subnettingAux4=0;
+
+            $subnetting1=0;
+            $subnetting2=0;
+            $subnetting3=0;
+            $subnetting4=0;
 
             $firstIpAux1=0;
             $firstIpAux2=0;
@@ -242,51 +226,56 @@
             $broadcastAux3=0;
             $broadcastAux4=0;
 
-                for($i=1;$i<=$subnettingNumber;$i++){
+            for($i=1;$i<=$subnettingNumber;$i++){
 
-                    // $finishIpAux1=$subnettingAux1;
-                    // $finishIpAux2=$subnettingAux2;
-                    // $finishIpAux3=$subnettingAux3;
-                    // $finishIpAux4=$subnettingAux4+$subnettingSize-2;
+                $subnettingAux4+=$subnettingSize;
+                if($subnettingAux4>255){
+                    $val=$subnettingAux4/256;
+                    $subnettingAux3+=round($val, 0, PHP_ROUND_HALF_DOWN);
+                    $subnettingAux4=0;
+                }
+                if($subnettingAux3>255){
+                    $val=$subnettingAux3/256;
+                    $subnettingAux2+=round($val, 0, PHP_ROUND_HALF_DOWN);
+                    $subnettingAux3=0;
+                    $subnettingAux4=0;
+                }
 
-                    // $broadcastAux1=$subnettingAux1;
-                    // $broadcastAux2=$subnettingAux2;
-                    // $broadcastAux3=$subnettingAux3;
-                    // $broadcastAux4=$subnettingAux4+$subnettingSize-1;
-
-                    if($subnettingAux4>255){
-                        $val=$subnettingAux4/256;
-                        $subnettingAux3+=round($val, 0, PHP_ROUND_HALF_DOWN);
-                        $subnettingAux4=0;
-                       // $finishIpAux1=$subnettingAux1;
-                        // $finishIpAux2=$subnettingAux2;
-                        // $finishIpAux3=$subnettingAux3-1;
-                        // $finishIpAux4=254;
-
-                        // $broadcastAux1=$subnettingAux1;
-                        // $broadcastAux2=$subnettingAux2;
-                        // $broadcastAux3=$subnettingAux3-1;
-                        // $broadcastAux4=255;
+            // Calculo de Broadcast
+                $broadcastAux1=$subnettingAux1;
+                $broadcastAux2=$subnettingAux2;
+                $broadcastAux3=$subnettingAux3;
+                $broadcastAux4=$subnettingAux4-1;
+                if($subnettingAux4==0){
+                    if($subnettingAux3==0){
+                        $broadcastAux2=$subnettingAux2-1;
+                        $broadcastAux3=255;
+                        $broadcastAux4=255;
+                    }else{
+                        $broadcastAux3=$subnettingAux3-1;
+                        $broadcastAux4=255;
                     }
-                    if($subnettingAux3>255){
-                        $val=$subnettingAux3/256;
-                        $ipA+=round($val, 0, PHP_ROUND_HALF_DOWN);
-                        $subnettingAux3=0;
-                        $subnettingAux4=0;
-                        
-                        // $finishIpAux4=254;
-                        // $broadcastAux4=255;
-                    }
-
-                    $firstIpAux1=$subnettingAux1;
-                    $firstIpAux2=$subnettingAux2;
-                    $firstIpAux3=$subnettingAux3;
-                    $firstIpAux4=$subnettingAux4+1;
-
                    
-                    echo "<tr><th scope='col'>$i</th><td> $subnettingAux1 . $subnettingAux2 . $subnettingAux3 . $subnettingAux4</td><td> $firstIpAux1 . $firstIpAux2 . $firstIpAux3 .$firstIpAux4  </td><td> - </td><td> $finishIpAux1 . $finishIpAux2 . $finishIpAux3 . $finishIpAux4</td><td> $broadcastAux1 . $broadcastAux2 . $broadcastAux3 .$broadcastAux4</td></tr>";
-                   $subnettingAux4+=$subnettingSize;
-                   
+                }
+                
+            // Calculo de IpFinal
+                    $finishIpAux1=$broadcastAux1;
+                    $finishIpAux2=$broadcastAux2;
+                    $finishIpAux3=$broadcastAux3;
+                    $finishIpAux4=$broadcastAux4-1;
+                  
+                    $firstIpAux1=$subnetting1;
+                    $firstIpAux2=$subnetting2;
+                    $firstIpAux3=$subnetting3;
+                    $firstIpAux4=$subnetting4+1;
+                    
+
+                    echo "<tr><th scope='col'>$i</th><td> $subnetting1 . $subnetting2 . $subnetting3 . $subnetting4</td><td> $firstIpAux1 . $firstIpAux2 . $firstIpAux3 .$firstIpAux4  </td><td> - </td><td> $finishIpAux1 . $finishIpAux2 . $finishIpAux3 . $finishIpAux4</td><td> $broadcastAux1 . $broadcastAux2 . $broadcastAux3 .$broadcastAux4</td></tr>";
+                    
+                    $subnetting1=$subnettingAux1;
+                    $subnetting2=$subnettingAux2;
+                    $subnetting3=$subnettingAux3;
+                    $subnetting4=$subnettingAux4;
                 }   
                 ?>  
                 </tbody>
