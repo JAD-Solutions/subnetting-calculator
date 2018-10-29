@@ -25,6 +25,7 @@
         }
         else{
             $ipAdress= 0;
+
         }
         if(isset($_POST["firstNetmask"]))
         {
@@ -68,7 +69,7 @@
 				<div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Dirección IP:</label>
 					<input type="text" class="form-control" required id="ipAdress" name="ipAdress" value="<?php echo $ipAdress; ?>" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$">
-				</div>
+  				</div>
                 <div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Tipo de RED:</label>
                     <input type="text" readonly="readonly" class="form-control" required id="tipo" name="tipo" value="<?php echo $tipo; ?>">
@@ -83,15 +84,15 @@
                            value="<?php echo $finalNetmask; ?>" class="form-control" step="1" max="30">
 				</div>
 			</div>
-            <br/>
+
 			<div class="text-center">
 				<button type="submit" name="calculate_button"  id="calculate_button" class="btn btn-primary">Calcular</button>
 				<button type="submit" name="clean_button" class="btn btn-success">Limpiar</button>
 			</div>
 			
 		</form>
+        <br>
 	</article>
-
 
     <!--Calculo de Resultados-->
     <?php 
@@ -109,121 +110,154 @@
             $subnettingNumber=$firstIpNumber/$finalIpNumber;
             $subnettingSize=$firstIpNumber/$subnettingNumber;
     ?>
-            <table class="table table-sm">
-            <thead  class="thead-dark">
-                <tr>
-                <th scope="col">#</th>
-                <th scope="col">Subnetting</th>
-                <th scope="col">IPS Disponibles</th>
-                <th scope="col">Broadcast</th>
-                </tr>
-            </thead>
+              <article class="jumbotron" style="background-color: white; width: 80%;margin-left: auto;margin-right: auto; padding-top: 0;">
+
+              <table class="table table-sm">
+                  <thead  class="thead-dark">
+                  <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Subredes  <?php echo "/ $finalNetmask"?></th>
+                      <th scope="col">Host Mínimo</th>
+                      <th scope="col">Host Máximo</th>
+                      <th scope="col">Broadcast</th>
+                      <th scope="col">Total</th>
+                  </tr>
+                </thead>
             <tbody>
     <?php
+        //Inicializo las variables
+            $subnettingAux1=0;
+            $subnettingAux2=0;
+            $subnettingAux3=0;
+            $subnettingAux4=0;
 
-            /*if($tipo2=="Clase A")
-            {
-                echo "a";
-            };
-            if($tipo2=="Clase B")
-            {
-                echo "b";
-            };
-            if($tipo2=="Clase C")
-            {
-                echo "c";
-            };*/ //Comentando el código de Johnny
+            $subnetting1=0;
+            $subnetting2=0;
+            $subnetting3=0;
+            $subnetting4=0;
+
+            $firstIpAux1=0;
+            $firstIpAux2=0;
+            $firstIpAux3=0;
+            $firstIpAux4=0;
+                 
+            $finishIpAux1=0;
+            $finishIpAux2=0;
+            $finishIpAux3=0;
+            $finishIpAux4=0;
+
+            $broadcastAux1=0;
+            $broadcastAux2=0;
+            $broadcastAux3=0;
+            $broadcastAux4=0;
+
+            $total=1;//variable que dice cuántas redes hay
+            $vali=0;
 
             $octetos=(explode(".",$ipAdress));
-            $ipA=0;
-            $ipB=0;
-            $ipC=0;
-            echo $octetos[0];
-            echo $octetos[1];
-            echo $octetos[2];
-            echo $octetos[3];
 
-                $ip=0;
-                for($i=1;$i<=$subnettingNumber;$i++){
-                    $aux=$ip+1;
-                    $aux2=$ip+$subnettingSize-2;
-                    $aux3=$ip+$subnettingSize-1;
-                    if($ip>255){
-                        $val=$ip/256;
-                        $ipB+=round($val, 0, PHP_ROUND_HALF_DOWN);
-                        $ip=0;
-                        $aux=0;
-                        $aux2=254;
-                        $aux3=255;
-                    }
-                    if($ipB>255){
-                        $val=$ipB/256;
-                        $ipA+=round($val, 0, PHP_ROUND_HALF_DOWN);
-                        $ipB=0;
-                        $ip=0;
-                        $aux=0;
-                        $aux2=254;
-                        $aux3=255;
-                    }
-                    if($tipo==="Clase A"){
-                        echo "<tr><th scope='col'>$i</th><td> $octetos[0] . $ipA . $ipB . $ip</td><td> $octetos[0] . $ipA . $ipB . <strong>[ $aux - $aux2 ]</strong></td><td> $octetos[0] . $ipA . $ipB .$aux3</td></tr>";
-                    }elseif ($tipo==="Clase B"){
-                        echo "<tr><th scope='col'>$i</th><td> $octetos[0] . $octetos[1] . $ipB . $ip</td><td> $octetos[0] . $octetos[1] . <strong>[ $ipB . $aux - ",$ipB+$subnettingSize-1," . $aux2 ]</strong></td><td> $octetos[0] . $octetos[1] . ",$ipB+$subnettingSize-1," . $aux3</td></tr>";
-                    }elseif ($tipo==="Clase C"){
-                        echo "C";
+            for($i=1;$i<=$subnettingNumber;$i++){
+
+                $subnettingAux4+=$subnettingSize;
+                if($subnettingAux4>255){
+                    $val=$subnettingAux4/256;
+                    $subnettingAux3+=round($val, 0, PHP_ROUND_HALF_DOWN);
+                    $subnettingAux4=0;
+                }
+                if($subnettingAux3>255){
+                    $val=$subnettingAux3/256;
+                    $subnettingAux2+=round($val, 0, PHP_ROUND_HALF_DOWN);
+                    $subnettingAux3=0;
+                    $subnettingAux4=0;
+                }
+
+            // Calculo de Broadcast
+                $broadcastAux1=$subnettingAux1;
+                $broadcastAux2=$subnettingAux2;
+                $broadcastAux3=$subnettingAux3;
+                $broadcastAux4=$subnettingAux4-1;
+                if($subnettingAux4==0){
+                    if($subnettingAux3==0){
+                        $broadcastAux2=$subnettingAux2-1;
+                        $broadcastAux3=255;
+                        $broadcastAux4=255;
                     }else{
-                        echo "Red inválida";
+                        $broadcastAux3=$subnettingAux3-1;
+                        $broadcastAux4=255;
                     }
-                   $ip+=$subnettingSize;
-                }    //Comentando el código de Johnny
+                   
+                }
+                
+                    // Calculo de IpFinal
+                    $finishIpAux1=$broadcastAux1;
+                    $finishIpAux2=$broadcastAux2;
+                    $finishIpAux3=$broadcastAux3;
+                    $finishIpAux4=$broadcastAux4-1;
+                  
+                    $firstIpAux1=$subnetting1;
+                    $firstIpAux2=$subnetting2;
+                    $firstIpAux3=$subnetting3;
+                    $firstIpAux4=$subnetting4+1;
+                    
+                    if($tipo=="Clase A"){
+                        if($vali==0)
+                            $total=(($finishIpAux2+1)*($finishIpAux3+1)*($finishIpAux4+2))-2;
+                        $vali++;
+                        echo "<tr><th scope='col'>$i</th>
+                               <td> $octetos[0] . $subnetting2 . $subnetting3 . $subnetting4</td>
+                               <td> $octetos[0] . $firstIpAux2 . $firstIpAux3 . $firstIpAux4</td>
+                               <td> $octetos[0] . $finishIpAux2 . $finishIpAux3 . $finishIpAux4</td>
+                               <td> $octetos[0] . $broadcastAux2 . $broadcastAux3 . $broadcastAux4</td>
+                               <td> <strong>$total</strong> </td></tr>";
+                    }elseif($tipo=="Clase B"){
+                        if($vali==0)
+                            $total=(($finishIpAux3+1)*($finishIpAux4+2))-2;
+                        $vali++;
+                        echo "<tr><th scope='col'>$i</th>
+                               <td> $octetos[0] . $octetos[1] . $subnetting3 . $subnetting4</td>
+                               <td> $octetos[0] . $octetos[1] . $firstIpAux3 . $firstIpAux4</td>
+                               <td> $octetos[0] . $octetos[1] . $finishIpAux3 . $finishIpAux4</td>
+                               <td> $octetos[0] . $octetos[1] . $broadcastAux3 . $broadcastAux4</td>
+                               <td> <strong>$total</strong> </td></tr>";
+                    }elseif($tipo=="Clase C"){
+                        if($vali==0)
+                            $total=(($finishIpAux4+2))-2;
+                        $vali++;
+                        echo "<tr><th scope='col'>$i</th>
+                               <td> $octetos[0] . $octetos[1] . $octetos[2] . $subnetting4</td>
+                               <td> $octetos[0] . $octetos[1] . $octetos[2] . $firstIpAux4</td>
+                               <td> $octetos[0] . $octetos[1] . $octetos[2] . $finishIpAux4</td>
+                               <td> $octetos[0] . $octetos[1] . $octetos[2] . $broadcastAux4</td>
+                               <td> <strong>$total</strong> </td></tr>";
+                    }else{
 
-
+                    }
+                    $subnetting1=$subnettingAux1;
+                    $subnetting2=$subnettingAux2;
+                    $subnetting3=$subnettingAux3;
+                    $subnetting4=$subnettingAux4;
+                }   
                 ?>
                 </tbody>
                 </table>
-
+    </article>
     <?php
-
           }else
             echo "no se puede calcular";
       }
-
     ?>
 
+    <footer>
+        <article class="jumbotron" style="background-color: #0747a6; width: 100%; padding: 1rem;margin: 0;">
+            <h6 style="color: white; width: 40%;margin-left: auto; margin-right: auto;text-align: center;">Hecho con 🍚 por <a href="https://github.com/huasipango">Anthony Cabrera</a> y <a href="https://github.com/shoniisra">Johnny Villacís</a>.</h6>
+        </article>
+    </footer>
     <!--Validacion de Formulario-->
     <script type="application/javascript">
         var ipAdressInput = document.getElementById("ipAdress");
         var firstNetmask = document.getElementById("firstNetmask");
         var finalNetmask = document.getElementById("finalNetmask");
         var tipo = document.getElementById("tipo");
-        /*function getClase() {
-            var ipAdress = ipAdressInput.value.split('.');
-            var ipAdressA.value = ipAdress[0];
-            var ipAdressB.value = ipAdress[1];
-            var ipAdressC.value = ipAdress[2];
-            if (ipAdress[0] > 0 && ipAdress[0] < 127)
-            {
-                tipo.value="Clase A";
-                tipo2.value="Clase A";
-                firstNetmask.min= 8;
-                finalNetmask.min= 8;
-            }
-            else if (ipAdress[0] >= 128 && ipAdress[0] < 191)
-            {
-                tipo.value="Clase B";
-                tipo2.value="Clase B";
-                firstNetmask.min= 16;
-                finalNetmask.min= 16;
-            }
-
-            else if (ipAdress[0] >= 192 && ipAdress[0] < 223){
-                tipo.value="Clase C";
-                tipo2.value="Clase C";
-                firstNetmask.min= 24;
-                finalNetmask.min= 24;
-            }
-
-        }*/
         function getIpNetmask() {
             var ipAdress = ipAdressInput.value.split('.');
             if (ipAdress[0] > 0 && ipAdress[0] < 127)
@@ -248,9 +282,7 @@
             finalNetmask.min=firstNetmask.value;
             //el mínimo de la netmask de destino es la netmask por default
         }
-        // var triggerIp = document.getElementById("ipAdress");
         document.addEventListener("click", getIpNetmask, false);//la función corre al hacer click en cualquier parte de la página
-        /*document.addEventListener("click", getClase, false);*/
     </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
