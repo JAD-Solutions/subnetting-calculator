@@ -4,7 +4,10 @@
 	<title>Calculadora de Subredes JA</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway|Roboto" rel="stylesheet">
 </head>
+
 <body>
 	<header >
 		<article class="jumbotron" style="background-color:#0747a6">
@@ -68,26 +71,40 @@
 			<div  class="form-group row">
 				<div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Dirección IP:</label>
+                    <div class="help-tip">
+                        <p>La dirección es la credencial pública que tiene para navegar por internet.</p>
+                    </div>
 					<input type="text" class="form-control" required id="ipAdress" name="ipAdress" value="<?php echo $ipAdress; ?>" pattern="((^|\.)((25[0-5])|(2[0-4]\d)|(1\d\d)|([1-9]?\d))){4}$">
   				</div>
                 <div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Tipo de RED:</label>
+                    <div class="help-tip">
+                        <p>En este trabajo se usarán tres redes: A < 127, B < 191, C < 223.</p>
+                    </div>
                     <input type="text" readonly="readonly" class="form-control" required id="tipo" name="tipo" value="<?php echo $tipo; ?>">
 				</div>
 				<div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Netmask Inicial (ejem: 24):</label>
+                    <div class="help-tip">
+                        <p>Este campo es llenado automáticamente por la aplicación a la hora que se introduce una dirección ip.</p>
+                    </div>
 					<input type="number" class="form-control" required id="firstNetmask" name="firstNetmask" value="<?php echo $firstNetmask; ?>">
 				</div>
 				<div class="form-group form-group-sm col-sm-3">
-					<label class="col-form-label">Netmask Final (ejem: 30):</label>		
+					<label class="col-form-label">Netmask Final (ejem: 30):</label>
+                    <div class="help-tip">
+                        <p>La diferencia entre Netmask Final e Inicial es el número exponente que eleva a 2 dando como resultado las subredes a conseguir. Ejem: 2<sup>5</sup> = 32 subredes.</p>
+                    </div>
 					<input type="number" required id="finalNetmask" name="finalNetmask"
                            value="<?php echo $finalNetmask; ?>" class="form-control" step="1" max="30">
 				</div>
 			</div>
 
 			<div class="text-center">
-				<button type="submit" name="calculate_button"  id="calculate_button" class="btn btn-primary">Calcular</button>
-				<button type="submit" name="clean_button" class="btn btn-success">Limpiar</button>
+				<button type="submit" name="calculate_button"  id="calculate_button" data-toggle="tooltip"
+                        data-placement="top" title="Enlista las subredes disponibles" class="btn btn-primary">Calcular</button>
+				<button type="submit" name="clean_button" data-toggle="tooltip"
+                        data-placement="top" title="Vacía la aplicación" class="btn btn-success">Limpiar</button>
 			</div>
 			
 		</form>
@@ -110,7 +127,7 @@
             $subnettingNumber=$firstIpNumber/$finalIpNumber;
             $subnettingSize=$firstIpNumber/$subnettingNumber;
     ?>
-              <article class="jumbotron" style="background-color: white; width: 80%;margin-left: auto;margin-right: auto; padding-top: 0;">
+              <article class="jumbotron" style="background-color: white; width: 80%;margin-left: auto;margin-right: auto; padding-top: 0; padding-bottom: 0;">
 
               <table class="table table-sm">
                   <thead  class="thead-dark">
@@ -252,39 +269,9 @@
             <h6 style="color: white; width: 40%;margin-left: auto; margin-right: auto;text-align: center;">Hecho con 🍚 por <a href="https://github.com/huasipango">Anthony Cabrera</a> y <a href="https://github.com/shoniisra">Johnny Villacís</a>.</h6>
         </article>
     </footer>
+
     <!--Validacion de Formulario-->
-    <script type="application/javascript">
-        var ipAdressInput = document.getElementById("ipAdress");
-        var firstNetmask = document.getElementById("firstNetmask");
-        var finalNetmask = document.getElementById("finalNetmask");
-        var tipo = document.getElementById("tipo");
-        function getIpNetmask() {
-            var ipAdress = ipAdressInput.value.split('.');
-            if (ipAdress[0] > 0 && ipAdress[0] < 127)
-            {
-                firstNetmask.value = 8;
-                tipo.value="Clase A";
-            }
-            else if (ipAdress[0] >= 128 && ipAdress[0] < 191)
-            {
-                firstNetmask.value = 16;
-                tipo.value="Clase B";
-            }
-
-            else if (ipAdress[0] >= 192 && ipAdress[0] < 223){
-                firstNetmask.value = 24;
-                tipo.value="Clase C";
-            }
-            else{
-                firstNetmask.value = "No soportado";
-            }
-            firstNetmask.min=firstNetmask.value;
-            finalNetmask.min=firstNetmask.value;
-            //el mínimo de la netmask de destino es la netmask por default
-        }
-        document.addEventListener("click", getIpNetmask, false);//la función corre al hacer click en cualquier parte de la página
-    </script>
-
+    <script src="js/main.js" type="application/javascript"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
