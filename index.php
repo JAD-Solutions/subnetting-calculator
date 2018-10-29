@@ -71,7 +71,7 @@
 				</div>
                 <div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Tipo de RED:</label>
-                    <input type="text" class="form-control" required id="tipo" name="tipo" value="<?php echo $tipo; ?>" disabled>
+                    <input type="text" readonly="readonly" class="form-control" required id="tipo" name="tipo" value="<?php echo $tipo; ?>">
 				</div>
 				<div class="form-group form-group-sm col-sm-3">
 					<label class="col-form-label">Netmask Inicial (ejem: 24):</label>
@@ -120,13 +120,8 @@
             </thead>
             <tbody>
     <?php
-            /*$ipA=0;
-            $ipB=0;
-            $ipC=0;
-            echo $ipA;
-            echo $ipB ;
-            echo $ipC;
-            if($tipo2=="Clase A")
+
+            /*if($tipo2=="Clase A")
             {
                 echo "a";
             };
@@ -140,17 +135,15 @@
             };*/ //Comentando el código de Johnny
 
             $octetos=(explode(".",$ipAdress));
+            $ipA=0;
+            $ipB=0;
+            $ipC=0;
             echo $octetos[0];
             echo $octetos[1];
             echo $octetos[2];
             echo $octetos[3];
-            for ($i=1 ; i<=$subnettingNumber ; $i++ ){
 
-            }
-
-
-
-                /*$ip=0;
+                $ip=0;
                 for($i=1;$i<=$subnettingNumber;$i++){
                     $aux=$ip+1;
                     $aux2=$ip+$subnettingSize-2;
@@ -172,10 +165,12 @@
                         $aux2=254;
                         $aux3=255;
                     }
-                   
-                    echo "<tr><th scope='col'>$i</th><td>$ipAdressA . $ipA . $ipB . $ip</td><td>$ipAdressA . $ipA . $ipB .$aux  - $ipAdressA . $ipA . $ipB . $aux2</td><td> $ipAdressA . $ipA . $ipB .$aux3</td></tr>";
+
+                    echo "<tr><th scope='col'>$i</th><td> . $ipA . $ipB . $ip</td><td> . $ipA . $ipB .$aux . $ipA . $ipB . $aux2</td><td>  . $ipA . $ipB .$aux3</td></tr>";
                    $ip+=$subnettingSize;
-                }   */ //Comentando el código de Johnny
+                }    //Comentando el código de Johnny
+
+
                 ?>
                 </tbody>
                 </table>
@@ -185,6 +180,15 @@
           }else
             echo "no se puede calcular";
       }
+        if($tipo==="Clase A"){
+            echo "A";
+        }elseif ($tipo==="Clase B"){
+            echo "B";
+        }elseif ($tipo==="Clase C"){
+            echo "C";
+        }else{
+            echo "Red inválida";
+        }
     ?>
 
     <!--Validacion de Formulario-->
